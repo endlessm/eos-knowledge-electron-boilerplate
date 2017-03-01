@@ -1,8 +1,8 @@
 {
-  "name": "electron-knowledge-demo",
-  "productName": "electron-knowledge-demo",
+  "name": "eos-knowledge-electron-boilerplate",
+  "productName": "Myths",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "A boilerplate electron knowledge application",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -10,8 +10,7 @@
     "make": "electron-forge make",
     "lint": "standard"
   },
-  "keywords": [],
-  "author": "matt",
+  "author": "Matt Watson",
   "license": "MIT",
   "config": {
     "forge": {
