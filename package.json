@@ -5,7 +5,8 @@
   "description": "A boilerplate electron knowledge application",
   "main": "src/index.js",
   "scripts": {
-    "start": "electron-forge start",
+    "download": "eos-knowledge-downloader",
+    "start": "XDG_DATA_DIRS=\"contents/share:$XDG_DATA_DIRS\" electron-forge start -i",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "lint": "standard"
@@ -15,29 +16,46 @@
   "config": {
     "forge": {
       "make_targets": {
-        "win32": [
-          "squirrel"
-        ],
-        "darwin": [
-          "zip"
-        ],
         "linux": [
-          "deb",
-          "rpm"
+          "flatpak"
         ]
       },
-      "electronPackagerConfig": {},
-      "electronWinstallerConfig": {
-        "name": "electron_knowledge_demo"
+      "electronPackagerConfig": {
+        "ignore": [
+          "/in/",
+          "/contents/"
+        ]
       },
-      "electronInstallerDebian": {},
-      "electronInstallerRedhat": {},
-      "github_repository": {
-        "owner": ""
-      },
-      "windowsStoreConfig": {
-        "packageName": "",
-        "name": "electronknowledgedemo"
+      "electronInstallerFlatpak": {
+        "id": "com.endlessm.myths.en",
+        "base": "com.endlessm.ElectronKnowledgeBaseApp",
+        "icon": false,
+        "finishArgs": [
+          "--socket=x11",
+          "--share=ipc",
+          "--device=dri",
+          "--socket=pulseaudio",
+          "--share=network",
+          "--talk-name=org.freedesktop.Notifications",
+          "--system-talk-name=com.endlessm.Metrics",
+          "--filesystem=/tmp",
+          "--filesystem=~/.local/share",
+          "--filesystem=~/.local/share/flatpak/app:ro",
+          "--filesystem=/var/lib/flatpak/app:ro",
+          "--filesystem=/var/endless-extra/flatpak/app:ro"
+        ],
+        "files": [
+          [
+            "contents",
+            "/"
+          ]
+        ],
+        "symlinks": [
+          [
+            "/bin/Myths",
+            "/bin/com.endlessm.myths.en"
+          ]
+        ]
       }
     }
   },
@@ -51,6 +69,7 @@
     "babel-plugin-transform-async-to-generator": "^6.22.0",
     "babel-preset-env": "^1.1.8",
     "babel-preset-react": "^6.23.0",
+    "eos-knowledge-downloader": "^0.0.0",
     "electron-prebuilt-compile": "1.6.1",
     "standard": "^8.6.0"
   }
