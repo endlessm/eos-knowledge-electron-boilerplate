@@ -1,5 +1,5 @@
 import { app, BrowserWindow, protocol } from 'electron'
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer'
 import { Engine } from 'eos-knowledge-content'
 import { registerService } from 'dbus'
 import yargs from 'yargs'
@@ -22,6 +22,7 @@ let mainWindow
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
+    frame: false,
     show: false
   })
   mainWindow.maximize()
@@ -33,7 +34,7 @@ const createWindow = async () => {
 
   // Open the DevTools.
   if (argv.inspector) {
-    await installExtension(REACT_DEVELOPER_TOOLS)
+    await Promise.all([installExtension(REACT_DEVELOPER_TOOLS), installExtension(REDUX_DEVTOOLS)])
     mainWindow.webContents.openDevTools()
   }
 
