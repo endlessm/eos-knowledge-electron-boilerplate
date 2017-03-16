@@ -1,0 +1,15 @@
+{
+  "app_id": "com.endlessm.myths.en",
+  "icon": "icon.png",
+  "app_data": "appdata.xml",
+  "app_assets": [
+    {
+      "path": "logo.svg"
+    },
+    {
+      "path": "background.jpg"
+    }
+  ],
+  "content_manifest": "https://subscriptions.prod.soma.endless-cloud.com/v1/a82915cbde270d773ddd3d89246daaa7990b18b5f80913ac3a16f2c520d0f494/manifest.json",
+  "disable_subscription_updates": true
+}
