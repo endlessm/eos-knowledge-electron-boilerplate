@@ -1,0 +1,11 @@
+#!/bin/bash -ex
+
+APP_ID=$(nodejs -e "console.log(require('${1}').app_id)")
+sed -i "s/com.endlessm.myths.en/${APP_ID}/g" package.json
+
+NAME=$(nodejs -e "console.log(require('${1}').name)")
+sed -i "s/com.endlessm.myths.en/${NAME}/g" package.json
+
+npm install
+npm run download -- $1
+npm run make
