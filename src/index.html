@@ -4,31 +4,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <body style="overflow: hidden; background-color: rgba(0,0,0,0); margin: 0" >
-  <div>Hello from electron!</div>
-  <div id="content"></div>
+  <div id="App"></div>
 </body>
-<script>
-import { remote, ipcRenderer } from 'electron'
-const { Engine, QueryObject } = remote.require('eos-knowledge-content')
-
-const engine = Engine.get_default()
-
-const content = document.getElementById('content')
-content.textContent = engine.default_app_id
-
-ipcRenderer.on('LoadItem', async (event, id, query, timestamp) => {
-  engine.get_object(id).then((model) => {
-    content.textContent = `Result activated over dbus ${model.title}`
-  })
-})
-ipcRenderer.on('LoadQuery', (event, query, timestamp) => {
-  const queryObj = new QueryObject({
-    query,
-    limit: 10
-  })
-  engine.query(queryObj).then((results) => {
-    content.textContent = `Query activated over dbus ${query}. Got ${results.get_models().length} results`
-  })
-})
-</script>
 </html>
