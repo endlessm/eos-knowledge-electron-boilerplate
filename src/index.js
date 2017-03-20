@@ -1,5 +1,4 @@
 import { app, BrowserWindow, protocol } from 'electron'
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer'
 import { Engine } from 'eos-knowledge-content'
 import { registerService } from 'dbus'
 import yargs from 'yargs'
@@ -19,7 +18,7 @@ const argv = yargs
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-const createWindow = async () => {
+const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     show: false
@@ -33,7 +32,6 @@ const createWindow = async () => {
 
   // Open the DevTools.
   if (argv.inspector) {
-    await installExtension(REACT_DEVELOPER_TOOLS)
     mainWindow.webContents.openDevTools()
   }
 
