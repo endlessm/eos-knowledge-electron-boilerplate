@@ -4,6 +4,10 @@ import { Engine } from 'eos-knowledge-content'
 import { registerService } from 'dbus'
 import yargs from 'yargs'
 
+const packageJson = require('../package.json')
+const appId = packageJson.config.forge.electronInstallerFlatpak.id
+const appObjectPath = '/' + appId.replace(/\./g, '/')
+
 const argv = yargs
   .help('help')
   .boolean('i')
@@ -51,7 +55,7 @@ const createWindow = async () => {
 const setupEknProtocol = () => {
   // Setup knowledge content
   const engine = Engine.get_default()
-  engine.default_app_id = 'com.endlessm.electron.myths.en'
+  engine.default_app_id = appId
 
   protocol.registerBufferProtocol('ekn', (request, callback) => {
     const { mime_type, data } = engine.get_domain().read_uri(request.url)
@@ -64,8 +68,8 @@ const setupEknProtocol = () => {
 let service
 
 const setupDBus = () => {
-  service = registerService('session', 'com.endlessm.electron.myths.en')
-  const object = service.createObject('/com/endlessm/electron/myths/en')
+  service = registerService('session', appId)
+  const object = service.createObject(appObjectPath)
   const iface = object.createInterface('com.endlessm.KnowledgeSearch')
   iface.addMethod('LoadItem', {
     in: [
